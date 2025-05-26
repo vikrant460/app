@@ -1,4 +1,4 @@
-using Microsoft.Diagnostics.Tracing.Parsers.MicrosoftWindowsWPF;
+using LanguageExt;
 using static System.Console;
 namespace Extensions
 {
@@ -23,6 +23,10 @@ namespace Extensions
             var result = input.Select(i => i * 3);
             return result;
         }
+        public static IEnumerable<int> QuickSort(this IEnumerable<int> input)
+        {
+            return input.OrderBy(x => x);
+        }
     }
     public static class NumberExtensions
     {
@@ -40,3 +44,4 @@ namespace Extensions
         }
     }
 }
+
