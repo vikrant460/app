@@ -1,11 +1,21 @@
-<tiptap-floating-menu [editor]="editor" class="floating-menu">
+@if(showFloatingMenu) {
+    <tiptap-floating-menu [editor]="editor" class="floating-menu">
     <button (click)="editor.chain().focus().toggleBold().run()">
         Bold
     </button>
     <button (click)="editor.chain().focus().toggleItalic().run()">
         Italic
     </button>
+    <div class="bookmark">
+        <select (change)="insertText($event)">
+            <option value="">Select Bookmark</option>
+            <option value="Item 1">Item 1</option>
+            <option value="Item 2">Item 2</option>
+            <option value="Item 3">Item 3</option>
+        </select>
+    </div>
 </tiptap-floating-menu>
+}
 <div class="floating-menu">
     <button (click)="editor.chain().focus().toggleBold().run()">
         Bold
@@ -19,5 +29,13 @@
     <button (click)="editor.chain().focus().toggleBulletList().run()">
         UL
     </button>
+    <div class="bookmark">
+        <select (change)="insertText($event)">
+            <option value="">Select Bookmark</option>
+            <option value="Item 1">Item 1</option>
+            <option value="Item 2">Item 2</option>
+            <option value="Item 3">Item 3</option>
+        </select>
+    </div>
 </div>
 <tiptap-editor [editor]="editor"></tiptap-editor>

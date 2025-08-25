@@ -16,13 +16,18 @@ import { TiptapEditorDirective, TiptapFloatingMenuDirective } from 'ngx-tiptap';
 })
 export class TiptapEditor implements OnDestroy {
   private value = '<p>Hello, Tiptap!</p>'; // can be HTML or JSON, see https://www.tiptap.dev/api/editor#content
+  showFloatingMenu = false;
   editor = new Editor({
     content: this.value,
-    extensions: [StarterKit, FloatingMenu,ListKit]
+    extensions: [StarterKit, FloatingMenu, ListKit]
   });
 
 
-
+  insertText(event: Event) {
+    const text = (event.target as HTMLTextAreaElement).value;
+    if (!text || !this.editor?.isEditable) return
+    this.editor.chain().focus().insertContent(text).run()
+  }
   ngOnDestroy(): void {
     this.editor.destroy();
   }
