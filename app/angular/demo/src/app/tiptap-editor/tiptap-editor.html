@@ -1,1 +1,23 @@
-<p>tiptap-editor works!</p>
+<tiptap-floating-menu [editor]="editor" class="floating-menu">
+    <button (click)="editor.chain().focus().toggleBold().run()">
+        Bold
+    </button>
+    <button (click)="editor.chain().focus().toggleItalic().run()">
+        Italic
+    </button>
+</tiptap-floating-menu>
+<div class="floating-menu">
+    <button (click)="editor.chain().focus().toggleBold().run()">
+        Bold
+    </button>
+    <button (click)="editor.chain().focus().toggleItalic().run()">
+        Italic
+    </button>
+    <button (click)="editor.chain().focus().toggleOrderedList().run()">
+        OL
+    </button>
+    <button (click)="editor.chain().focus().toggleBulletList().run()">
+        UL
+    </button>
+</div>
+<tiptap-editor [editor]="editor"></tiptap-editor>
