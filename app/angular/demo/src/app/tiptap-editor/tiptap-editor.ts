@@ -16,9 +16,23 @@ import { TiptapEditorDirective, TiptapFloatingMenuDirective } from 'ngx-tiptap';
 })
 export class TiptapEditor implements OnDestroy {
   private value = '<p>Hello, Tiptap!</p>'; // can be HTML or JSON, see https://www.tiptap.dev/api/editor#content
+  private jsonDoc = {
+    "type": "doc",
+    "content": [
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "type": "text",
+            "text": "Hello Tiptap!"
+          }
+        ]
+      }
+    ]
+  }
   showFloatingMenu = false;
   editor = new Editor({
-    content: this.value,
+    content: this.jsonDoc,
     extensions: [StarterKit, FloatingMenu, ListKit]
   });
 
