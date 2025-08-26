@@ -1,9 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NgxEditorComponent, NgxEditorMenuComponent, Editor, Toolbar } from 'ngx-editor';
 import { BoomarkSelector } from '../boomark-selector/boomark-selector';
+import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-ngx-texteditor',
-  imports: [NgxEditorComponent, NgxEditorMenuComponent, BoomarkSelector],
+  imports: [NgxEditorComponent, NgxEditorMenuComponent, BoomarkSelector, CommonModule],
   templateUrl: './ngx-texteditor.html',
   styleUrl: './ngx-texteditor.css'
 })
@@ -31,11 +32,16 @@ export class NgxTexteditor implements OnInit, OnDestroy {
       }
     ]
   }
+  output: object = {};
   ngOnInit(): void {
     this.editor = new Editor({
       content: this.paragraphDoc,
-
+      
     });
+    this.editor.valueChanges.subscribe(value=> {
+      console.log(value);
+      this.output = value;
+    })
   }
 
   // make sure to destory the editor
