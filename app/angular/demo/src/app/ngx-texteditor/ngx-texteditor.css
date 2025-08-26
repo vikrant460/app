@@ -1,0 +1,9 @@
+.NgxEditor__Wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.NgxEditor__Wrapper ngx-editor-menu {
+  margin-bottom: 8px; /* some spacing before editor */
+}
