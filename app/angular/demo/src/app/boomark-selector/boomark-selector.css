@@ -1,6 +1,7 @@
 .NgxEditor__Dropdown {
   position: relative;
   display: inline-block;
+  padding: 4px 0;
 }
 
 .NgxEditor__Dropdown--button {
