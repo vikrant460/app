@@ -29,6 +29,7 @@
     <button (click)="editor.chain().focus().toggleBulletList().run()">
         UL
     </button>
+     <button (click)="addLink()" [class.active]="isActive('link')">🔗</button>
     <div class="bookmark">
         <select (change)="insertText($event)">
             <option value="">Select Bookmark</option>
@@ -39,3 +40,8 @@
     </div>
 </div>
 <tiptap-editor [editor]="editor"></tiptap-editor>
+<div>
+    <pre>
+       {{output}}
+    </pre>
+</div>

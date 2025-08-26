@@ -1,7 +1,9 @@
-.tiptap p{
+.tiptap p {
   margin: 1em 0;
-  min-width: 200px;
-  min-height: 200px;
+  border: 1px solid #ccc;
+  padding: 10px;
+  min-height: 150px;
+  cursor: text;
 }
 
 .floating-menu p {
