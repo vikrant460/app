@@ -1,14 +1,15 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { NgxEditorComponent, NgxEditorMenuComponent, Editor, toHTML, toDoc, Toolbar   } from 'ngx-editor';
+import { NgxEditorComponent, NgxEditorMenuComponent, Editor, Toolbar } from 'ngx-editor';
+import { BoomarkSelector } from '../boomark-selector/boomark-selector';
 @Component({
   selector: 'app-ngx-texteditor',
-  imports: [NgxEditorComponent, NgxEditorMenuComponent],
+  imports: [NgxEditorComponent, NgxEditorMenuComponent, BoomarkSelector],
   templateUrl: './ngx-texteditor.html',
   styleUrl: './ngx-texteditor.css'
 })
 export class NgxTexteditor implements OnInit, OnDestroy {
   editor!: Editor;
-    toolbar: Toolbar = [
+  toolbar: Toolbar = [
     // default value
     ['bold', 'italic'],
     ['ordered_list', 'bullet_list'],
@@ -33,7 +34,7 @@ export class NgxTexteditor implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.editor = new Editor({
       content: this.paragraphDoc,
-      
+
     });
   }
 
@@ -41,11 +42,11 @@ export class NgxTexteditor implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.editor.destroy();
   }
-    insertText(event: Event): void {
-      const text = (event.target as HTMLTextAreaElement).value;
-      this.editor.commands
-        .insertText(text)
-        .focus() // Optional: Focus the editor after insertion
-        .exec();
-    }
+  insertText(event: Event): void {
+    const text = (event.target as HTMLTextAreaElement).value;
+    this.editor.commands
+      .insertText(text)
+      .focus() // Optional: Focus the editor after insertion
+      .exec();
+  }
 }

@@ -1,0 +1,12 @@
+<div class="NgxEditor__Dropdown">
+  <button type="button" class="NgxEditor__Dropdown--button">
+    Bookmark ⏷
+  </button>
+  <ul class="NgxEditor__Dropdown--list">
+    @for (bookmark of bookmarks; track bookmark) {
+      <li (click)="insertBookmark(bookmark)">
+        {{ bookmark }}
+      </li>
+    }
+  </ul>
+</div>

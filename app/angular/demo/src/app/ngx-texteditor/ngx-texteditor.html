@@ -3,12 +3,5 @@
     <ngx-editor [editor]="editor" [placeholder]="'Type here...'"></ngx-editor>
 </div>
 <ng-template #customMenu>
-    <div id="bookmark">
-        <select (change)="insertText($event)">
-            <option value="">Select Bookmark</option>
-            <option value="Item 1">Item 1</option>
-            <option value="Item 2">Item 2</option>
-            <option value="Item 3">Item 3</option>
-        </select>
-    </div>
+    <app-boomark-selector [editor]="editor"></app-boomark-selector>
 </ng-template>
