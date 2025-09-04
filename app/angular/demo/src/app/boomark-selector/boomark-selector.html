@@ -1,5 +1,5 @@
 <select class="NgxEditor__Dropdown" (change)="applyBookmark($event)">
-  <option value="" disabled selected>Bookmark</option>
+  <option value="" disabled selected>Bookmarks</option>
   @for (bm of bookmarks; track bm) {
     <option [value]="bm">{{ bm }}</option>
   }
