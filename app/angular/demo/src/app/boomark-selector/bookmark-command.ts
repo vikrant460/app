@@ -1,27 +1,26 @@
-import { EditorState, Transaction } from 'prosemirror-state';
+import { EditorState, Transaction, TextSelection } from 'prosemirror-state';
+import { Command } from 'prosemirror-state';
 
-export function insertBookmark(bookmarkType: string) {
-  return function (state: EditorState, dispatch?: (tr: Transaction) => void) {
-    const { schema, selection } = state;
+export function insertBookmark(bookmarkType: string): Command {
+  return function (state: EditorState, dispatch?: (tr: Transaction) => void): boolean {
+    const { schema, selection, tr } = state;
+    const { from, to } = selection;
+
     const markType = schema.marks['bookmark'];
     if (!markType) return false;
 
-    const bookmarkMark = markType.create({ type: bookmarkType });
+    const bookmarkText = `${bookmarkType}`;
+    const textNode = schema.text(bookmarkText, [markType.create({ type: bookmarkType })]);
 
-    if (selection.empty) {
-      // Create a text node with a mark
-      const textNode = schema.text(bookmarkType, [bookmarkMark]);
-      if (dispatch) {
-        dispatch(state.tr.insert(selection.from, textNode).scrollIntoView());
-      }
-    } else {
-      // Apply the mark to the selected text
-      if (dispatch) {
-        const tr = state.tr.addMark(selection.from, selection.to, bookmarkMark);
-        dispatch(tr.scrollIntoView());
-      }
+    if (dispatch) {
+      dispatch(
+        tr.replaceRangeWith(from, to, textNode)
+          .setSelection(TextSelection.create(tr.doc, from + bookmarkText.length))
+      );
     }
 
     return true;
   };
 }
+
+

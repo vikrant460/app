@@ -10,7 +10,7 @@ const bookmarkMark: MarkSpec = {
     return [
       'span',
       { 'data-bookmark': value, class: 'bookmark' },
-      `{{${value}}}`
+      0 // IMPORTANT: this tells ProseMirror to render the text content here
     ];
   },
   parseDOM: [
@@ -22,6 +22,7 @@ const bookmarkMark: MarkSpec = {
     },
   ],
 };
+
 
 // take existing marks + add bookmark
 const marks = defaultSchema.spec.marks.addToEnd('bookmark', bookmarkMark);
