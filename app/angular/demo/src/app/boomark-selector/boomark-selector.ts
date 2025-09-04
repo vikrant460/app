@@ -14,12 +14,6 @@ export class BoomarkSelector {
 
   bookmarks = ['{{contact}}', '{{name}}', '{{email}}'];
 
-  insertBookmark(token: string) {
-    if (!this.editor) return;
-    const tr = this.editor.view.state.tr.insertText(token);
-    this.editor.view.dispatch(tr);
-    this.editor.view.focus();
-  }
   applyBookmark(event: Event) {
     const value = (event.target as HTMLSelectElement).value;
     if (value && this.editor.view) {
