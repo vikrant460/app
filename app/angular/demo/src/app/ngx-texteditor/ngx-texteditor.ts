@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NgxEditorComponent, NgxEditorMenuComponent, Editor, Toolbar } from 'ngx-editor';
 import { BoomarkSelector } from '../boomark-selector/boomark-selector';
 import { CommonModule } from '@angular/common';
+import { bookmarkSchema } from '../boomark-selector/bookmark-schema.';
 @Component({
   selector: 'app-ngx-texteditor',
   imports: [NgxEditorComponent, NgxEditorMenuComponent, BoomarkSelector, CommonModule],
@@ -11,7 +12,6 @@ import { CommonModule } from '@angular/common';
 export class NgxTexteditor implements OnInit, OnDestroy {
   editor!: Editor;
   toolbar: Toolbar = [
-    // default value
     ['bold', 'italic'],
     ['ordered_list', 'bullet_list'],
     [{ heading: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] }],
@@ -35,6 +35,7 @@ export class NgxTexteditor implements OnInit, OnDestroy {
   output: object = {};
   ngOnInit(): void {
     this.editor = new Editor({
+      schema: bookmarkSchema,
       content: this.paragraphDoc,
       
     });
