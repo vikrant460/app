@@ -15,7 +15,13 @@ export class NgxTexteditor implements OnInit, OnDestroy {
     ['bold', 'italic'],
     ['ordered_list', 'bullet_list'],
     [{ heading: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] }],
-    ['link']
+    ['link'],
+    ['underline', 'strike'],
+    ['code', 'blockquote'],
+    ['text_color', 'background_color'],
+    ['horizontal_rule', 'format_clear', 'indent', 'outdent'],
+    ['superscript', 'subscript'],
+    ['undo', 'redo'],
   ];
   html!: '';
   private paragraphDoc = {
