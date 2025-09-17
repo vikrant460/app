@@ -20,4 +20,10 @@ public class UnitTest1
         Assert.Equal(expected, Fib(input));
     }
 
+    [Fact]
+    public void FibBenchmarkTest()
+    {
+        FibBenchmark.Run();
+    }
+
 }
