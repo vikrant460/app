@@ -1,5 +1,4 @@
 ﻿namespace sample1.test;
-
 using static sample1.Helper;
 using static sample1.FibBenchmark;
 public class UnitTest1
@@ -25,5 +24,17 @@ public class UnitTest1
     {
         FibBenchmark.Run();
     }
-
+    [Theory]
+    [InlineData(10_000_000_000_000)]
+    public async Task When_ResponseNotReceivedWithinThreeSeconds_TimeoutOccurs(long counter)
+    {
+        // Given
+        using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(3));
+       
+        await Assert.ThrowsAsync<OperationCanceledException>(async () =>
+        {
+            await AsyncDemo.DoWorkAsync(counter, cts.Token);
+        });
+        Assert.True(cts.IsCancellationRequested, "Cancellation token should be triggered after timeout.");
+    }
 }
