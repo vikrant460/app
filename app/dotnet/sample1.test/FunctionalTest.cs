@@ -30,11 +30,22 @@ public class UnitTest1
     {
         // Given
         using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(3));
-       
+        var progress = new Progress<int>(percent => Console.WriteLine($"Progress: {percent}%"));
         await Assert.ThrowsAsync<OperationCanceledException>(async () =>
         {
-            await AsyncDemo.DoWorkAsync(counter, cts.Token);
+            await AsyncDemo.DoWorkAsync(counter, progress, cts.Token);
         });
         Assert.True(cts.IsCancellationRequested, "Cancellation token should be triggered after timeout.");
+    }
+
+    [Fact]
+    public async Task Should_ReportProgressAndCompleteSuccessfully()
+    {
+        // Given
+        using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(3));
+        int percent = 0;
+        var progress = new Progress<int>(p => percent = p);
+        await AsyncDemo.DoWorkAsync(1000, progress, cts.Token);
+        Assert.Equal(100, percent);
     }
 }
