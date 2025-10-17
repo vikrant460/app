@@ -1,0 +1,28 @@
+.chart-container {
+  display: flex;
+  flex-direction: column;
+  height: 600px; /* total container height */
+  border: 1px solid #ccc;
+}
+
+#header {
+  flex: 0 0 auto;      /* header height based on content */
+  padding: 2px;
+  background: #f0f0f0;
+}
+
+#content {
+  flex: 1 1 auto;     /* take remaining space and shrink */
+  min-height: 0;      /* allow shrinking below natural content height */
+  overflow: hidden;   /* no scrollbars */
+  display: flex;      /* only if you want to center inner content */
+  flex-direction: column;
+  justify-content: flex-start; /* align top instead of center */
+  padding: 8px;
+  box-sizing: border-box;
+}
+#content > * {
+  /* shrink everything inside proportionally */
+  transform-origin: top;
+  transform: scale(0.9); /* adjust based on container height */
+}

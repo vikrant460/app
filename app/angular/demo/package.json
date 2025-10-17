@@ -29,6 +29,7 @@
     "@angular/platform-browser": "^20.2.0",
     "@angular/router": "^20.2.0",
     "@floating-ui/dom": "^1.6.0",
+    "@katoid/angular-grid-layout": "^3.1.0",
     "@tiptap/core": "^3.3.0",
     "@tiptap/extension-bold": "^3.3.0",
     "@tiptap/extension-floating-menu": "^3.3.0",
