@@ -38,14 +38,51 @@ public class UnitTest1
         Assert.True(cts.IsCancellationRequested, "Cancellation token should be triggered after timeout.");
     }
 
+    //[Fact]
+    //public async Task Should_ReportProgressAndCompleteSuccessfully()
+    //{
+    //    // Given
+    //    using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(3));
+    //    int percent = 0;
+    //    var progress = new Progress<int>(p => percent = p);
+    //    await AsyncDemo.DoWorkAsync(1000, progress, cts.Token);
+    //    Assert.Equal(100, percent);
+    //}
     [Fact]
-    public async Task Should_ReportProgressAndCompleteSuccessfully()
+    public void StringInterningTest()
     {
-        // Given
-        using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(3));
-        int percent = 0;
-        var progress = new Progress<int>(p => percent = p);
-        await AsyncDemo.DoWorkAsync(1000, progress, cts.Token);
-        Assert.Equal(100, percent);
+        string x = "hello";
+        string y = "he" + "llo";
+        string z = string.Concat("he", "llo");// created at runtime, not interned
+        string w = string.IsInterned(z); // 
+        Assert.True(ReferenceEquals(y, x));
+        Assert.False(ReferenceEquals(z, y));
+        Assert.False(ReferenceEquals(z, x));
+        Assert.True(ReferenceEquals(w, y));
+        Assert.Equal(z, y);
+        
+    }
+    [Fact]
+    public void TestStatic()
+    {
+        var s = new StaticFun();
+        Assert.Equal(0, StaticFun.x);
+        Assert.Equal(6, StaticFun.y);
+    }
+
+
+}
+public class StaticFun
+{
+    public static int y;
+    public static int x = y;
+    
+    static StaticFun()
+    {
+        y = 5;    
+    }
+    public StaticFun()
+    {
+        y = 6;  
     }
 }
