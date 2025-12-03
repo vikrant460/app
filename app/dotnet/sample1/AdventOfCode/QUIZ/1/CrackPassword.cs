@@ -1,20 +1,13 @@
 ﻿using Microsoft.CodeAnalysis;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace sample1.AdventOfCode.QUIZ
 {
     public class CrackPassword
     {
-        private readonly int MinPosition = 0;
         private readonly int MaxPosition = 99;
-        const int initialPosition = 50;
+
         public CrackPassword(int min, int max)
         {
-            MinPosition = min; 
             MaxPosition = max;
         }
         private List<Move> GetMove(string filePath)
