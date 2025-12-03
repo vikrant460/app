@@ -10,9 +10,9 @@ namespace sample1.AdventOfCode.QUIZ
         {
             MaxPosition = max;
         }
-        private List<Move> GetMove(string filePath)
+        private async Task<List<Move>> GetMove(string filePath)
         {
-            var getLinesFromFile = System.IO.File.ReadAllLines(filePath);
+            var getLinesFromFile = await File.ReadAllLinesAsync(filePath);
             var moves = getLinesFromFile.Select(line =>
             {
                 var direction = line[0] == 'L' ? Direction.Left : Direction.Right;
@@ -21,11 +21,11 @@ namespace sample1.AdventOfCode.QUIZ
             }).ToList();
             return moves;
         }
-        public int Crack(string filePath, int initialPosition)
+        public async Task<int> Crack(string filePath, int initialPosition)
         {
            int currentPosition = initialPosition;
            int atZeroCount = 0;
-            var moves = GetMove(filePath);
+            var moves = await GetMove(filePath);
            foreach (var move in moves)
            {
                 if (move.Direction == Direction.Left)

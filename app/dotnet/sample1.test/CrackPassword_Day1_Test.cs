@@ -10,17 +10,17 @@ namespace sample1.test
     public class CrackPassword_Day1_Test
     {
         [Fact]
-        public void CrackPasswordTest()
+        public async Task CrackPasswordTest()
         {
             var cracker = new CrackPassword(0, 99);  
-            var result = cracker.Crack("Input1.txt", 50);
+            var result = await cracker.Crack("Input1.txt", 50);
             Assert.Equal(3, result);
         }
         [Fact]
-        public void CrackPasswordTest2()
+        public async Task CrackPasswordTest2()
         {
             var cracker = new CrackPassword(0, 99);
-            var result = cracker.Crack("Input2.txt", 50);
+            var result = await cracker.Crack("Input2.txt", 50);
             Assert.Equal(1086, result);
         }
 
