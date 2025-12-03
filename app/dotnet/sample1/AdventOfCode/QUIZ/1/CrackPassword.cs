@@ -4,11 +4,11 @@ namespace sample1.AdventOfCode.QUIZ
 {
     public class CrackPassword
     {
-        private readonly int MaxPosition = 99;
+        private readonly int MOD;
 
-        public CrackPassword(int min, int max)
+        public CrackPassword(int max)
         {
-            MaxPosition = max;
+            MOD = max + 1;
         }
         private async Task<List<Move>> GetMove(string filePath)
         {
@@ -44,13 +44,13 @@ namespace sample1.AdventOfCode.QUIZ
 
         public int MoveRight(Move move, int currentPosition)
         {
-            int currPosition = (currentPosition + move.Steps)  %  (MaxPosition + 1);
+            int currPosition = (currentPosition + move.Steps)  % MOD;
             return currPosition;
         }
 
         public int MoveLeft(Move move, int currentPosition) 
         {
-            currentPosition = ((currentPosition - move.Steps) + (MaxPosition + 1)) % (MaxPosition + 1);
+            currentPosition = ((currentPosition - move.Steps) + MOD)  % MOD;
             return currentPosition;
         }
         
