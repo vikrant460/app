@@ -40,5 +40,11 @@ namespace sample1.test
             var currentPosition = cracker.MoveRight(new Move(Direction.Right, steps), currentposition);
             Assert.Equal(newPosition, currentPosition);
         }
+
+        [Fact]
+        public void RunBenchmark()
+        {
+            MyBenchmark.Run();
+        }
     }
 }

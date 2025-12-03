@@ -1,6 +1,6 @@
 ﻿namespace sample1.test;
 using static sample1.Helper;
-using static sample1.FibBenchmark;
+using static sample1.MyBenchmark;
 public class UnitTest1
 {
     [Theory]
@@ -19,11 +19,11 @@ public class UnitTest1
         Assert.Equal(expected, Fib(input));
     }
 
-    [Fact]
-    public void FibBenchmarkTest()
-    {
-        FibBenchmark.Run();
-    }
+    //[Fact]
+    //public void FibBenchmarkTest()
+    //{
+    //    FibBenchmark.Run();
+    //}
     [Theory]
     [InlineData(10_000_000_000_000)]
     public async Task When_ResponseNotReceivedWithinThreeSeconds_TimeoutOccurs(long counter)

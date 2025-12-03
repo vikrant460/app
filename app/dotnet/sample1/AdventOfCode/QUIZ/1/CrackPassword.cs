@@ -1,7 +1,10 @@
-﻿using Microsoft.CodeAnalysis;
+﻿using BenchmarkDotNet.Attributes;
+using BenchmarkDotNet.Running;
+using Microsoft.CodeAnalysis;
 
 namespace sample1.AdventOfCode.QUIZ
 {
+    [MemoryDiagnoser]
     public class CrackPassword
     {
         private readonly int MOD;
@@ -21,6 +24,7 @@ namespace sample1.AdventOfCode.QUIZ
             }).ToList();
             return moves;
         }
+        [Benchmark]
         public async Task<int> CrackAsync(string filePath, int initialPosition)
         {
            int currentPosition = initialPosition;
@@ -53,7 +57,7 @@ namespace sample1.AdventOfCode.QUIZ
             currentPosition = ((currentPosition - move.Steps) + MOD)  % MOD;
             return currentPosition;
         }
-        
+        public static void Run() => BenchmarkRunner.Run<CrackPassword>();
     }
     public record Move(Direction Direction, int Steps);
    
