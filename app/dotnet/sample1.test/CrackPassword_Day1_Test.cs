@@ -13,14 +13,14 @@ namespace sample1.test
         public async Task CrackPasswordTest()
         {
             var cracker = new CrackPassword(99);  
-            var result = await cracker.CrackAsync("Input1.txt", 50);
+            var result = await cracker.CrackPasswordAsync("Input1.txt", 50);
             Assert.Equal(3, result);
         }
         [Fact]
         public async Task CrackPasswordTest2()
         {
             var cracker = new CrackPassword(99);
-            var result = await cracker.CrackAsync("Input2.txt", 50);
+            var result = await cracker.CrackPasswordAsync("Input2.txt", 50);
             Assert.Equal(1086, result);
         }
 
@@ -41,7 +41,7 @@ namespace sample1.test
             Assert.Equal(newPosition, currentPosition);
         }
 
-        [Fact]
+        [Fact(Skip = "only when benchmark needed")]
         public void RunBenchmark()
         {
             MyBenchmark.Run();
