@@ -21,7 +21,7 @@ namespace sample1.AdventOfCode.QUIZ
             }).ToList();
             return moves;
         }
-        public async Task<int> Crack(string filePath, int initialPosition)
+        public async Task<int> CrackAsync(string filePath, int initialPosition)
         {
            int currentPosition = initialPosition;
            int atZeroCount = 0;
