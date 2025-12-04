@@ -18,19 +18,13 @@ public class MyBenchmark
     [Benchmark]
     public async Task<int> CrackPasswordWithLinq()
     {
-        return await new CrackPassword(99).CrackAsync("Input2.txt", 50);
+        return await new CrackPassword(99).CrackPasswordV1("Input2.txt", 50);
     }
     [Benchmark]
-    public async Task<int> CrackPasswordWithSpan()
+    public int CrackPasswordWithSpan()
     {
-        return await new CrackPassword(99).CrackPasswordAsync("Input2.txt", 50);
+        return new CrackPassword(99).CrackPasswordV2("Input2.txt", 50);
     }
-    // [Benchmark]
-    // public int Memoized_Fib()
-    // {
-    //     var fib = Fib.Memoize();
-    //     return fib(num);
-    // }
 
     public static void Run() => BenchmarkRunner.Run<MyBenchmark>();
 }

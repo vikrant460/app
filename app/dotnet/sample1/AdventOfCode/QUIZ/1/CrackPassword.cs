@@ -24,30 +24,59 @@ namespace sample1.AdventOfCode.QUIZ
             }).ToList();
             return moves;
         }
+
         [Benchmark]
-        public async Task<int> CrackAsync(string filePath, int initialPosition)
+        public async Task<int> CrackPasswordV1(string filePath, int initialPosition)
         {
            int currentPosition = initialPosition;
            int atZeroCount = 0;
             var moves = await GetMove(filePath);
            foreach (var move in moves)
            {
+                int fullMoves = move.Steps / _mod;
+                atZeroCount += fullMoves;
                 if (move.Direction == Direction.Left)
                 {
+                    int previousPosition = currentPosition; 
                     currentPosition = MoveLeft(move, currentPosition);
-                    atZeroCount = currentPosition == 0 ? atZeroCount + 1 : atZeroCount;
+                    if(currentPosition != 0 && currentPosition > previousPosition )
+                    {
+                        if(previousPosition != 0) 
+                        {
+                            atZeroCount++;
+                        }
+                           
+                    }
+                    else if(currentPosition == 0)
+                    {
+                        atZeroCount++;
+                    }
+                        
                 }
                 else
                 {
+                    int previousPosion = currentPosition; 
                     currentPosition = MoveRight(move, currentPosition);
-                    atZeroCount = currentPosition == 0 ? atZeroCount + 1 : atZeroCount;
+                    if (currentPosition != 0 && currentPosition < previousPosion)
+                    {
+                        if(previousPosion != 0)
+                        {
+                            atZeroCount++;
+                        }
+
+                    } 
+                    else if(currentPosition == 0)
+                    {
+                        atZeroCount++;
+                    }
+
                 }
             }
             return atZeroCount;
         }
 
         [Benchmark]
-        public async Task<int> CrackPasswordAsync(string filePath, int initialPosition)
+        public int CrackPasswordV2(string filePath, int initialPosition)
         {
             int pos = initialPosition;
             int atZero = 0;
@@ -72,7 +101,7 @@ namespace sample1.AdventOfCode.QUIZ
             return atZero;
 
         }
-
+        
         public int MoveRight(Move move, int currentPosition)
         {
             int currPosition = (currentPosition + move.Steps)  % _mod;
