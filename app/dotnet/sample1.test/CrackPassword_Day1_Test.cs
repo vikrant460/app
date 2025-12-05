@@ -9,44 +9,22 @@ namespace sample1.test
 {
     public class CrackPassword_Day1_Test
     {
-        [Fact]
-        public async Task CrackAsyncTest()
-        {
-            var cracker = new CrackPassword(99);
-            var result = await cracker.CrackPasswordV1("Input1.txt", 50);
-            Assert.Equal(6, result);
-        }
-        //[Fact]
-        //public void CrackPasswordTest()
-        //{
-        //    var cracker = new CrackPassword(99);  
-        //    var result = cracker.CrackPasswordV2("Input1.txt", 50);
-        //    Assert.Equal(3, result);
-        //}
-        //[Fact]
-        //public void CrackPasswordTest2()
-        //{
-        //    var cracker = new CrackPassword(99);
-        //    var result = cracker.CrackPasswordV2("Input2.txt", 50);
-        //    Assert.Equal(1086, result);
-        //}
-
         [Theory]
-        [InlineData(68, 50, 82)]
-        public void MoveLeftTest(int steps, int currentposition, int newPosition)
+        [MemberData(nameof(_testLeftMove))]
+        public async Task CrackAsyncTest(List<Move> moves, int maxLockNumber, int initialLockArrowPosition, int expectedPassword)
         {
-            var cracker = new CrackPassword(99);  
-            var currentPosition = cracker.MoveLeft(new Move(Direction.Left, steps), currentposition);
-            Assert.Equal(newPosition, currentPosition);
+            var cracker = new CrackPassword(maxLockNumber, initialLockArrowPosition);
+            var result = await cracker.CrackPasswordV1(moves);
+            Assert.Equal(expectedPassword, result);
         }
-        [Theory]
-        [InlineData(1, 99, 0)]
-        public void MoveRightTest(int steps, int currentposition, int newPosition)
+        public static IEnumerable<object[]> _testLeftMove = new List<object[]>
         {
-            var cracker = new CrackPassword(99);  
-            var currentPosition = cracker.MoveRight(new Move(Direction.Right, steps), currentposition);
-            Assert.Equal(newPosition, currentPosition);
-        }
+            new object[] { new List<Move> { new Move(Direction.Left, 1) }, 2, 0, 0 },
+            new object[] { new List<Move> { new Move(Direction.Left, 2) }, 2, 0, 0 },
+            new object[] { new List<Move> { new Move(Direction.Left, 3) }, 2, 0, 1 },
+            new object[] { new List<Move> { new Move(Direction.Left, 7) }, 2, 1, 3 },
+            new object[] { new List<Move> { new Move(Direction.Left, 8) }, 2, 1, 2 },
+        };
 
         [Fact]
         public void RunBenchmark()

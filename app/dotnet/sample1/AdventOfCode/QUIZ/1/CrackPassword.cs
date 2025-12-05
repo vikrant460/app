@@ -8,12 +8,13 @@ namespace sample1.AdventOfCode.QUIZ
     public class CrackPassword
     {
         private readonly int _mod;
-
-        public CrackPassword(int max)
+        private readonly int _initialPosition = 0;
+        public CrackPassword(int max, int initialPosition)
         {
             _mod = max + 1;
+            _initialPosition = initialPosition;
         }
-        private async Task<List<Move>> GetMove(string filePath)
+        public async Task<List<Move>> GetMove(string filePath)
         {
             var getLinesFromFile = await File.ReadAllLinesAsync(filePath);
             var moves = getLinesFromFile.Select(line =>
@@ -26,80 +27,45 @@ namespace sample1.AdventOfCode.QUIZ
         }
 
         [Benchmark]
-        public async Task<int> CrackPasswordV1(string filePath, int initialPosition)
+        public async Task<int> CrackPasswordV1(List<Move> moves)
         {
-           int currentPosition = initialPosition;
+           int currentPosition = _initialPosition;
            int atZeroCount = 0;
-            var moves = await GetMove(filePath);
            foreach (var move in moves)
-           {
-                int fullMoves = move.Steps / _mod;
-                atZeroCount += fullMoves;
+           { 
+                var fullmoves = move.Steps / _mod;
+                var remainingMOves = move.Steps % _mod;
                 if (move.Direction == Direction.Left)
                 {
-                    int previousPosition = currentPosition; 
-                    currentPosition = MoveLeft(move, currentPosition);
-                    if(currentPosition != 0 && currentPosition > previousPosition )
+                    int initialPosition = currentPosition;
+                    currentPosition = MoveLeft(new Move(move.Direction, remainingMOves), currentPosition);
+                    if(currentPosition == initialPosition)
                     {
-                        if(previousPosition != 0) 
+                        if (initialPosition == 0)
                         {
-                            atZeroCount++;
-                        }
-                           
-                    }
-                    else if(currentPosition == 0)
-                    {
-                        atZeroCount++;
-                    }
-                        
-                }
-                else
-                {
-                    int previousPosion = currentPosition; 
-                    currentPosition = MoveRight(move, currentPosition);
-                    if (currentPosition != 0 && currentPosition < previousPosion)
-                    {
-                        if(previousPosion != 0)
-                        {
-                            atZeroCount++;
-                        }
+                            atZeroCount += fullmoves;
 
-                    } 
-                    else if(currentPosition == 0)
+                        }
+                        else
+                        {
+                            atZeroCount += fullmoves + 1;
+                        }
+                    }
+                    else
                     {
-                        atZeroCount++;
+                        if(currentPosition == 0)
+                        {
+                            atZeroCount += fullmoves + 1;
+                        }
+                        else
+                        {
+                            atZeroCount += fullmoves;
+                        }
                     }
 
                 }
             }
             return atZeroCount;
-        }
-
-        [Benchmark]
-        public int CrackPasswordV2(string filePath, int initialPosition)
-        {
-            int pos = initialPosition;
-            int atZero = 0;
-
-            using var reader = new StreamReader(filePath);
-
-            string? line;
-            while ((line = reader.ReadLine()) != null)
-            {
-                char dir = line[0];
-                int steps = int.Parse(line.AsSpan(1));
-
-                if (dir == 'L')
-                    pos = (pos - steps + _mod) % _mod;
-                else
-                    pos = (pos + steps) % _mod;
-
-                if (pos == 0)
-                    atZero++;
-            }
-
-            return atZero;
-
         }
         
         public int MoveRight(Move move, int currentPosition)
@@ -110,8 +76,8 @@ namespace sample1.AdventOfCode.QUIZ
 
         public int MoveLeft(Move move, int currentPosition) 
         {
-            currentPosition = ((currentPosition - move.Steps) + _mod)  % _mod;
-            return currentPosition;
+            var newPosition = ((currentPosition - move.Steps) + _mod)  % _mod;
+            return newPosition;
         }
         public static void Run() => BenchmarkRunner.Run<CrackPassword>();
     }
