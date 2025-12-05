@@ -64,6 +64,33 @@ namespace sample1.AdventOfCode.QUIZ
                     }
 
                 }
+                else
+                {
+                    int initialPosition = currentPosition;
+                    currentPosition = MoveRight(new Move(move.Direction, remainingMOves), currentPosition);
+                    if (currentPosition == initialPosition)
+                    {
+                        if (initialPosition == 0)
+                        {
+                            atZeroCount += fullmoves;
+                        }
+                        else
+                        {
+                            atZeroCount += fullmoves + 1;
+                        }
+                    }
+                    else
+                    {
+                        if (currentPosition == 0)
+                        {
+                            atZeroCount += fullmoves + 1;
+                        }
+                        else
+                        {
+                            atZeroCount += fullmoves;
+                        }
+                    }
+                }
             }
             return atZeroCount;
         }
