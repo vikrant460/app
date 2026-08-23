@@ -17,13 +17,21 @@ namespace sample1.test
             var result = await cracker.CrackPasswordV1(moves);
             Assert.Equal(expectedPassword, result);
         }
+        [Fact]
+        public async Task CrackAsync_Moves_Test()
+        {
+            var cracker = new CrackPassword(99, 50);
+            var moves = await cracker.GetMove("Input2.txt");
+            var result = await cracker.CrackPasswordV1(moves);
+            Assert.Equal(6268, result);
+        }
         public static readonly IEnumerable<object[]> _testLeftMove = [
-        
+            [new List<Move> { new Move(Direction.Left, 2) }, 2, 1, 1],
             [new List<Move> { new Move(Direction.Left, 1) }, 2, 0, 0],
             [new List<Move> { new Move(Direction.Left, 2) }, 2, 0, 0],
             [new List<Move> { new Move(Direction.Left, 3) }, 2, 0, 1],
             [new List<Move> { new Move(Direction.Left, 7) }, 2, 1, 3],
-            [new List<Move> { new Move(Direction.Left, 8) }, 2, 1, 2],
+            [new List<Move> { new Move(Direction.Left, 8) }, 2, 1, 3],
         ];
         public static readonly IEnumerable<object[]> _testRighttMove = [
         

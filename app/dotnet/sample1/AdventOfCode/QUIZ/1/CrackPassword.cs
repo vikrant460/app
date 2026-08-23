@@ -57,6 +57,17 @@ namespace sample1.AdventOfCode.QUIZ
                         {
                             atZeroCount += fullmoves + 1;
                         }
+                        else if (currentPosition > initialPosition)
+                        {
+                            if (initialPosition == 0)
+                            {
+                                atZeroCount += fullmoves;
+                            }
+                            else
+                            {
+                                atZeroCount += fullmoves + 1;
+                            }
+                        }
                         else
                         {
                             atZeroCount += fullmoves;
@@ -84,6 +95,17 @@ namespace sample1.AdventOfCode.QUIZ
                         if (currentPosition == 0)
                         {
                             atZeroCount += fullmoves + 1;
+                        }
+                        else if (currentPosition < initialPosition)
+                        {
+                            if (initialPosition == 0)
+                            {
+                                atZeroCount += fullmoves;
+                            }
+                            else
+                            {
+                                atZeroCount += fullmoves + 1;
+                            }
                         }
                         else
                         {
