@@ -1,8 +1,7 @@
 namespace sample1;
+
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Running;
-using sample1.AdventOfCode.QUIZ;
-using static sample1.Helper;
 [MemoryDiagnoser]
 [InProcess]
 public class MyBenchmark
