@@ -45,15 +45,43 @@ public class BookAnalyzerService
             extractedText = extractedText.Substring(0, 10000);
         }
 
-        string userPrompt = $"""
-            Summarize the following document text into these specific structural components:
-            1. "Summary": A concise overview of the main topics.
-            2. "CoreReview": The primary analytical takeaway.
-            3. "KeyQuotes": Up to 3 main points or exact phrases.
 
-            Document Text:
-            {extractedText}
-            """;
+        string userPrompt = $"""
+    You are helping a reader understand and appreciate a book.
+
+    Analyze the following document text and return exactly these three sections:
+
+    1. "Summary"
+       Give a concise overview of the main ideas, themes, arguments, or events.
+       Focus on what the author is trying to communicate rather than describing the structure of the document.
+
+    2. "CoreReview"
+       Explain the deepest or most important takeaway from the text.
+       Focus on the author's underlying ideas, worldview, questions, tensions, or insights.
+       Do not merely repeat the Summary.
+
+    3. "KeyQuotes"
+       Select up to 3 of the most meaningful passages from the ORIGINAL TEXT.
+
+       Quote-selection criteria:
+       - Prefer passages that are philosophical, profound, insightful, poetic, emotionally resonant, or beautifully expressed.
+       - Prefer passages that reveal something important about human nature, life, society, relationships, meaning, mortality, knowledge, or the central theme of the book.
+       - Choose passages that stand on their own and are interesting to reread.
+       - Prefer a complete sentence or a short contiguous passage rather than an isolated fragment.
+       - Do NOT choose quotes merely because they contain important factual information.
+       - Do NOT rewrite, summarize, improve, combine, or paraphrase the quotes.
+       - Every quote MUST appear verbatim in the provided document text.
+       - Preserve the author's original wording and punctuation.
+       - Do not join text from different parts of the document into one quote.
+       - If the text contains no genuinely meaningful or beautiful passage, return fewer quotes rather than inventing one.
+
+    IMPORTANT:
+    The "KeyQuotes" section is for DIRECT QUOTATIONS ONLY.
+    The "Summary" and "CoreReview" may be paraphrased, but "KeyQuotes" must use the author's exact words.
+
+    Document Text:
+    {extractedText}
+    """;
 
         var chatMessages = new List<ChatMessage>
         {
@@ -120,7 +148,7 @@ public class BookAnalyzerService
             {
                 string summaryText = string.Join("\n", items.Take(5));
                 string reviewText = string.Join("\n", items.Skip(5));
-                
+
                 return new BookAnalysisResult(
                     Summary: summaryText,
                     CoreReview: string.IsNullOrWhiteSpace(reviewText) ? summaryText : reviewText,

@@ -1,6 +1,6 @@
 using BookAnalyzer;
 var analyzer = new BookAnalyzerService(modelId: "phi4-mini");
-string pdfPath = @"C:\Users\Vikrant\Desktop\Docs\Books\Self Improvement\The Gift of Imperfection.pdf";
+string pdfPath = @"C:\Users\Vikrant\Desktop\Docs\Books\Fiction\Demian-By-Hermann-Hesse.pdf";
 
 
 Console.ForegroundColor = ConsoleColor.Cyan;
