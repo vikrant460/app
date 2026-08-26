@@ -1,5 +1,5 @@
 using BookAnalyzer;
-var analyzer = new BookAnalyzerService(modelId: "phi4-mini");
+var analyzer = new AnalyzerService(modelId: "phi4-mini");
 string pdfPath = @"C:\Users\Vikrant\Desktop\Docs\Books\Fiction\Demian-By-Hermann-Hesse.pdf";
 
 
@@ -11,7 +11,7 @@ Console.ResetColor();
 
 Console.WriteLine($"\n[+] Processing file: {pdfPath}");
 Console.WriteLine("[+] Sending context to local model (phi4-mini)... Please wait.\n");
-var result = await analyzer.AnalyzePdfAsync(pdfPath);
+var result = await analyzer.AnalyzeAsync(pdfPath);
 
 
 if (result == null)
