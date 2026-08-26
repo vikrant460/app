@@ -1,9 +1,8 @@
 namespace BookAnalyzer.Helper;
+
 public static class PromptBuilder
 {
-    public static string BuildPrompt(string extractedText)
-    {
-        return $"""
+   private const string SummaryPrompt = """
         You are helping a reader understand and appreciate a book.
 
         Analyze the following document text and return exactly these three sections:
@@ -22,7 +21,32 @@ public static class PromptBuilder
            Provide them in their original form without paraphrasing.
 
         Here is the document text:
-        {extractedText}
+        {0}
         """;
-    }
+   private const string QuotePrompt = """
+    Analyze the following book text.
+
+    Select up to 3 profound and meaningful quotes from the ORIGINAL TEXT.
+
+    Choose quotes that:
+    - express an important or deep idea
+    - reveal something meaningful about the author's thinking
+    - are memorable or worth reflecting upon
+    - are not merely generic or motivational statements
+
+    Do not paraphrase or invent quotes.
+    The quotes must be copied exactly from the provided text.
+
+    Return an empty string for "Summary".
+    Return an empty string for "CoreReview".
+    Populate only "KeyQuotes".
+
+    Document text:
+    {0}
+    """;
+
+   public static string BuildPrompt(string extractedText)
+   {
+      return string.Format(SummaryPrompt, extractedText);
+   }
 }
