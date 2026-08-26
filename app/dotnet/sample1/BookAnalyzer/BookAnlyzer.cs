@@ -1,9 +1,9 @@
 using static BookAnalyzer.Helper.TextExtractor;
 using static BookAnalyzer.Helper.ResponseBuilder;
-using static BookAnalyzer.Helper.RequestBuilder;
 using BookAnalyzer.Model;
 using Microsoft.Extensions.AI;
 using OllamaSharp;
+using BookAnalyzer.Helper;
 
 
 namespace BookAnalyzer;
@@ -26,19 +26,16 @@ public class AnalyzerService
     public async Task<BookAnalysisResult?> AnalyzeAsync(string filePath)
     {
 
-        string extractedText = ExtractTextFromPdf(filePath);
+        var extractedText = ExtractTextFromPdf(filePath);
 
         if (string.IsNullOrWhiteSpace(extractedText))
             throw new InvalidOperationException("No readable text found.");
 
-        List<ChatMessage> chatMessages = CreateRequest(extractedText);
+        var request = new RequestBuilder(extractedText);
 
-        ChatOptions options = CreateRequestOptions();
+        var response = await _chatClient.GetResponseAsync(request.Messages, request.Options);
 
-        ChatResponse response = await _chatClient.GetResponseAsync(chatMessages, options);
-        string rawText = response.Text ?? string.Empty;
-
-        return ParseResponse(rawText);
+        return ParseResponse(response.Text ?? string.Empty);
     }
 
 

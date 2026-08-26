@@ -1,23 +1,23 @@
 using Microsoft.Extensions.AI;
 using static BookAnalyzer.Helper.PromptBuilder;
 namespace BookAnalyzer.Helper;
-public static class RequestBuilder
+public class RequestBuilder
 {
-    public static ChatOptions CreateRequestOptions()
+    private readonly string bookContent;
+
+    public RequestBuilder(string bookContent)
     {
-        return new ChatOptions
+        this.bookContent = bookContent;
+    }
+    public  ChatOptions Options => new ChatOptions
         {
             Temperature = 0.0f,
             ResponseFormat = ChatResponseFormat.Json
         };
-    }
 
-    public static List<ChatMessage> CreateRequest(string extractedText)
+    public List<ChatMessage> Messages => new List<ChatMessage>
     {
-        return new List<ChatMessage>
-        {
-            new(ChatRole.System, "You are a precise data extractor. You MUST format responses strictly as JSON with key names: 'Summary', 'CoreReview', and 'KeyQuotes'."),
-            new(ChatRole.User,  extractedText.Length <= 10000 ? BuildPrompt(extractedText) : BuildPrompt(extractedText.Substring(0, 10000)))
-        };
-    }
+        new ChatMessage(ChatRole.System, "You are a helpful assistant that analyzes books and provides summaries, core reviews, and key quotes."),
+        new ChatMessage(ChatRole.User, BuildPrompt(bookContent))
+    };
 }
