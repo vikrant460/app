@@ -26,7 +26,7 @@ public class AnalyzerService
     public async Task<BookAnalysisResult?> AnalyzeAsync(string filePath)
     {
 
-        var extractedText = ExtractTextFromPdf(filePath);
+        var extractedText = ExtractText(filePath);
 
         if (string.IsNullOrWhiteSpace(extractedText))
             throw new InvalidOperationException("No readable text found.");

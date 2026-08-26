@@ -31,7 +31,7 @@ RenderSectionHeader("ANALYTICAL TAKEAWAY", ConsoleColor.Green);
 Console.WriteLine(string.IsNullOrWhiteSpace(result.CoreReview) ? "No core review provided." : result.CoreReview.Trim());
 
 // 3. Key Quotes / Highlighted Points Section
-RenderSectionHeader("KEY HIGHLIGHTS & QUOTES", ConsoleColor.Magenta);
+RenderSectionHeader("QUOTES", ConsoleColor.Magenta);
 if (result.KeyQuotes != null && result.KeyQuotes.Count > 0)
 {
     foreach (var quote in result.KeyQuotes)

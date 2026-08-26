@@ -35,35 +35,6 @@ public static class ResponseBuilder
             Console.WriteLine($"[Parsing Error]: {ex.Message}");
         }
 
-        // Attempt 2: Fallback for dynamic JSON keys (e.g. "Guidepost #1", "Guidepost #2")
-        try
-        {
-            using var doc = JsonDocument.Parse(cleanedJson);
-            var root = doc.RootElement;
-
-            var items = new List<string>();
-            foreach (var prop in root.EnumerateObject())
-            {
-                items.Add($"{prop.Name}: {prop.Value.GetString()}");
-            }
-
-            if (items.Count > 0)
-            {
-                string summaryText = string.Join("\n", items.Take(5));
-                string reviewText = string.Join("\n", items.Skip(5));
-
-                return new BookAnalysisResult(
-                    Summary: summaryText,
-                    CoreReview: string.IsNullOrWhiteSpace(reviewText) ? summaryText : reviewText,
-                    KeyQuotes: items.Take(3).ToList()
-                );
-            }
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"[Parsing Error]: {ex.Message}");
-        }
-
         return new BookAnalysisResult(Summary: string.Empty, CoreReview: string.Empty, KeyQuotes: new List<string>());
     }
 
