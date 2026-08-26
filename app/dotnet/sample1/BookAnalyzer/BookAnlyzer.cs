@@ -1,4 +1,3 @@
-using System.Text;
 using System.Text.Json;
 using Microsoft.Extensions.AI;
 using OllamaSharp;
@@ -21,7 +20,7 @@ public class BookAnalyzerService
 
     public BookAnalyzerService(string endpoint = "http://localhost:11434/", string modelId = "phi4-mini")
     {
-        var httpClient = new System.Net.Http.HttpClient
+        var httpClient = new HttpClient
         {
             BaseAddress = new Uri(endpoint),
             Timeout = TimeSpan.FromMinutes(15)
@@ -110,10 +109,10 @@ public class BookAnalyzerService
             }
         }
 
-        return ParseResponse(cleanedJson, extractedText);
+        return ParseResponse(cleanedJson);
     }
 
-    private static BookAnalysisResult ParseResponse(string jsonText, string originalText)
+    private static BookAnalysisResult ParseResponse(string jsonText)
     {
         var jsonOptions = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
 
@@ -161,13 +160,13 @@ public class BookAnalyzerService
             Console.WriteLine($"[Parsing Error]: {ex.Message}");
         }
 
-        return null;
+        return new BookAnalysisResult(Summary: string.Empty, CoreReview: string.Empty, KeyQuotes: new List<string>());
     }
 
     private static string ExtractTextFromPdf(string filePath)
     {
         var sb = new System.Text.StringBuilder();
-        using (UglyToad.PdfPig.PdfDocument document = UglyToad.PdfPig.PdfDocument.Open(filePath))
+        using (PdfDocument document = PdfDocument.Open(filePath))
         {
             foreach (var page in document.GetPages())
             {
