@@ -18,6 +18,6 @@ public class RequestBuilder
     public List<ChatMessage> Messages => new List<ChatMessage>
     {
         new ChatMessage(ChatRole.System, "You are a helpful assistant that analyzes books and provides summaries, core reviews, and key quotes."),
-        new ChatMessage(ChatRole.User, BuildPrompt(bookContent))
+        new ChatMessage(ChatRole.User, Build(bookContent))
     };
 }

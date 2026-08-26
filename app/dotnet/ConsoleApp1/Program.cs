@@ -1,6 +1,18 @@
 using BookAnalyzer;
-var analyzer = new AnalyzerService(modelId: "phi4-mini");
-string pdfPath = @"C:\Users\Vikrant\Desktop\Docs\Books\Fiction\Demian-By-Hermann-Hesse.pdf";
+
+if (args.Length == 0)
+{
+    Console.WriteLine("Usage: BookAnalyzer <pdf-path>");
+    return;
+}
+
+var pdfPath = args[0];
+
+if (!File.Exists(pdfPath))
+{
+    Console.WriteLine($"File not found: {pdfPath}");
+    return;
+}
 
 
 Console.ForegroundColor = ConsoleColor.Cyan;
@@ -10,7 +22,9 @@ Console.WriteLine("=================================================");
 Console.ResetColor();
 
 Console.WriteLine($"\n[+] Processing file: {pdfPath}");
-Console.WriteLine("[+] Sending context to local model (phi4-mini)... Please wait.\n");
+
+var analyzer = new AnalyzerService(modelId: "phi4-mini");
+
 var result = await analyzer.AnalyzeAsync(pdfPath);
 
 
