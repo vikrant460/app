@@ -5,19 +5,17 @@ namespace BookAnalyzer.Helper;
 
 public static class ResponseBuilder
 {
-    public static BookAnalysisResult ParseResponse(string responseJson)
+    public static AnalysisResult ParseResponse(string responseJson)
     {
         var options = new JsonSerializerOptions
         {
             PropertyNameCaseInsensitive = true
         };
 
-        return JsonSerializer.Deserialize<BookAnalysisResult>(
+        return JsonSerializer.Deserialize<AnalysisResult>(
             responseJson,
             options)
-            ?? new BookAnalysisResult(
-                Summary: string.Empty,
-                CoreReview: string.Empty,
+            ?? new AnalysisResult(
                 KeyQuotes: []);
     }
 

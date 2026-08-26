@@ -22,13 +22,6 @@ if (result == null)
     return;
 }
 
-// 1. Executive Summary Section
-RenderSectionHeader("EXECUTIVE SUMMARY", ConsoleColor.Yellow);
-Console.WriteLine(string.IsNullOrWhiteSpace(result.Summary) ? "No summary provided." : result.Summary.Trim());
-
-// 2. Analytical Takeaway Section
-RenderSectionHeader("ANALYTICAL TAKEAWAY", ConsoleColor.Green);
-Console.WriteLine(string.IsNullOrWhiteSpace(result.CoreReview) ? "No core review provided." : result.CoreReview.Trim());
 
 // 3. Key Quotes / Highlighted Points Section
 RenderSectionHeader("QUOTES", ConsoleColor.Magenta);

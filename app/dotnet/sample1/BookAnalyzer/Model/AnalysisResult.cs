@@ -3,8 +3,6 @@ namespace BookAnalyzer.Model;
 /// <summary>
 /// Strongly-typed output schema for LLM responses.
 /// </summary>
-public record BookAnalysisResult(
-    string Summary,
-    string CoreReview,
+public record AnalysisResult(
     List<string> KeyQuotes
 );

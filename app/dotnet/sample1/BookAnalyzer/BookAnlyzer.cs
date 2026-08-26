@@ -23,7 +23,7 @@ public class AnalyzerService
         _chatClient = new OllamaApiClient(httpClient, modelId);
     }
 
-    public async Task<BookAnalysisResult?> AnalyzeAsync(string filePath)
+    public async Task<AnalysisResult?> AnalyzeAsync(string filePath)
     {
 
         var extractedText = ExtractText(filePath);
